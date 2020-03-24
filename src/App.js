@@ -17,6 +17,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { IntlProvider } from "react-intl";
+import translations from "./locale";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+
 import "./App.css";
 // import GeoMap from "./GroMap/GeoMap";
 const drawerWidth = 240;
@@ -55,11 +61,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function App(props) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [data, setData] = React.useState([]);
+  const [locale, setLocale] = React.useState("en_US");
   const [loader, setLoader] = React.useState(false);
   const [err, setErr] = React.useState(false);
 
@@ -103,18 +120,21 @@ function App(props) {
         ))}
       </List>
       <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText
-              primary={<FormattedMessage id={text} defaultMessage={text} />}
-            />
-          </ListItem>
-        ))}
-      </List>
+
+      <IntlProvider locale={"en"} messages={translations[locale]}>
+        <List>
+          {["All mail", "Trash", "Spam"].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText
+                primary={<FormattedMessage id={text} defaultMessage={text} />}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </IntlProvider>
     </div>
   );
 
@@ -122,7 +142,7 @@ function App(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -135,6 +155,48 @@ function App(props) {
           <Typography variant="h6" noWrap>
             Responsive drawer
           </Typography>
+          <div>
+            <Button
+              style={{ color: "white" }}
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              Open Menu
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => {
+                  setLocale("en-US");
+                  handleClose();
+                }}
+              >
+                English
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setLocale("hi_IN");
+                  handleClose();
+                }}
+              >
+                Hindi
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setLocale("fr_FR");
+                  handleClose();
+                }}
+              >
+                French
+              </MenuItem>
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -177,7 +239,6 @@ function App(props) {
           height={"210px"}
         /> */}
 
-        
         <table>
           <thead style={{ fontWeight: "bold" }}>
             <tr>
