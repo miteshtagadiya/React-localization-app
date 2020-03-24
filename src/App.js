@@ -17,7 +17,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { FormattedMessage } from "react-intl";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-
+import "./App.css";
+// import GeoMap from "./GroMap/GeoMap";
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -58,6 +59,28 @@ function App(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [data, setData] = React.useState([]);
+  const [loader, setLoader] = React.useState(false);
+  const [err, setErr] = React.useState(false);
+
+  React.useEffect(() => {
+    setLoader(true);
+    setErr(false);
+    fetch(`https://coronavirus-tracker-api.herokuapp.com/v2/locations`, {
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(response => {
+        setData(response);
+        setLoader(false);
+        setErr(false);
+      })
+      .catch(error => {
+        setData([]);
+        setLoader(false);
+        setErr(true);
+      });
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -147,6 +170,49 @@ function App(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {/* <GeoMap
+          selector={"Country"}
+          rows={locations}
+          columns={Columns}
+          height={"210px"}
+        /> */}
+
+        
+        <table>
+          <thead style={{ fontWeight: "bold" }}>
+            <tr>
+              <th>Country</th>
+              <th>Country Code</th>
+              <th>Last Updated</th>
+              <th>Confirmed</th>
+              <th>Deaths</th>
+              <th>Recovered</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.length !== 0 ? (
+              data.locations.map((location, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{location.country}</td>
+                    <td>{location.country_code}</td>
+                    <td>
+                      {new Date(location.last_updated).toLocaleDateString()}
+                    </td>
+                    <td>{location.latest.confirmed}</td>
+
+                    <td>{location.latest.deaths}</td>
+
+                    <td>{location.latest.recovered}</td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr />
+            )}
+          </tbody>
+        </table>
+
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
