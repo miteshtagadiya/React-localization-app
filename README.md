@@ -64,4 +64,4 @@ import { FormattedMessage } from "react-intl";
 <FormattedMessage id={text} defaultMessage={text} />
 ```
 
-You can try changing string value in json file to see how it works.
+You can try changing string value in the locale json file to see how it works.
