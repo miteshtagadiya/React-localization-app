@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/React-localization-app/static/css/main.58bc66bc.chunk.css",
+    "main.js": "/React-localization-app/static/js/main.50ec346b.chunk.js",
+    "main.js.map": "/React-localization-app/static/js/main.50ec346b.chunk.js.map",
+    "runtime-main.js": "/React-localization-app/static/js/runtime-main.5749ef0c.js",
+    "runtime-main.js.map": "/React-localization-app/static/js/runtime-main.5749ef0c.js.map",
+    "static/js/2.bde4366b.chunk.js": "/React-localization-app/static/js/2.bde4366b.chunk.js",
+    "static/js/2.bde4366b.chunk.js.map": "/React-localization-app/static/js/2.bde4366b.chunk.js.map",
+    "index.html": "/React-localization-app/index.html",
+    "precache-manifest.946e25e458b3a8c3cfbe909feda9ab98.js": "/React-localization-app/precache-manifest.946e25e458b3a8c3cfbe909feda9ab98.js",
+    "service-worker.js": "/React-localization-app/service-worker.js",
+    "static/css/main.58bc66bc.chunk.css.map": "/React-localization-app/static/css/main.58bc66bc.chunk.css.map",
+    "static/js/2.bde4366b.chunk.js.LICENSE.txt": "/React-localization-app/static/js/2.bde4366b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5749ef0c.js",
+    "static/js/2.bde4366b.chunk.js",
+    "static/css/main.58bc66bc.chunk.css",
+    "static/js/main.50ec346b.chunk.js"
+  ]
+}
